@@ -1,5 +1,5 @@
-# seed-common
-* * *
+# seed-common - basic structure with bootstrap, angular, jade and coffee
+
 What is included in this seed:
 
 * **Jade** - All Jades files are compiled to HTML. Angular template most be named to pattern
@@ -9,7 +9,7 @@ leaving the higher granularity - less urls, increases the performance of load Ap
 
 * **Coffee Script** - JS client and server code are written in Coffee Script and compile to JS.
 
-* **AngularJS and Angular-route** - Single Page Application engine framework.
+* **AngularJS and Angular-route** - Single Page Application framework.
 
 * **Twitter Bootstrap 3** - Easy Responsive Layout
 
@@ -72,6 +72,7 @@ node server.js
 
 
 ## Directory structure
+```
 ├── client                         --> Files in client (browser) side
 │   ├── bower.json                 --> bower configuration file
 │   ├── gruntFile.coffee           --> Grunt tasks
@@ -101,7 +102,7 @@ node server.js
         │   ├── routes             --> ExpressJS routes
         ├── package.json           --> Npm configuration to server
         └── server.coffee          --> server start point
-
+```
 
 ## Contact
 ### Links 
