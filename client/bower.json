@@ -1,0 +1,22 @@
+{
+  "name": "Seed-common",
+  "version": "0.0.1",
+  "description": "Seed with common frameworks and tools",
+  "authors": [
+    "João Krauchenco Neto"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.0.2",
+    "angular": "~1.2.3",
+    "angular-route": "~1.2.3"
+  }
+}

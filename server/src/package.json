@@ -1,0 +1,13 @@
+{
+  "name": "seed-common-server",
+  "version": "0.0.1",
+  "description": "Seed Common Server",
+  "main": "server.js",
+  "dependencies": {
+    "express-namespace": "~0.1.1",
+    "open": "0.0.4"
+  },
+  "devDependencies": {},
+  "author": "João Krauchenco Neto",
+  "license": "MIT"
+}
