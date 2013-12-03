@@ -111,3 +111,6 @@ node server.js
 [NodeJS](http://nodejs.org/), [NPM](https://github.com/bower/bower), [ExpressJS](http://expressjs.com)
 
 Inspired by [angular-seed](https://github.com/angular/angular-seed)
+
+## License
+[MIT License](https://github.com/krauchenco/seed-basic/blob/master/LICENSE)
