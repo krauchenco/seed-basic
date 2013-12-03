@@ -1,4 +1,4 @@
-# seed-common - basic structure with bootstrap, angular, jade and coffee
+# seed-basic - basic structure with bootstrap, angular, jade and coffee
 
 What is included in this seed:
 
@@ -24,14 +24,14 @@ Thid party packages are downloaded by Bower tool.
 ## How to use
 Clone the repo
 ```
-git clone https://github.com/krauchenco/seed-common.git
+git clone https://github.com/krauchenco/seed-basic.git
 ```
 
 ### Development
 
 #### Compile the client
 ```
-cd seed-common/client
+cd seed-basic/client
 
 # install grunt tasks
 npm install
@@ -48,7 +48,7 @@ grunt build-watch
 
 #### Compile the server
 ```
-cd seed-common/server
+cd seed-basic/server
 
 # install grunt tasks to compile the source
 npm install
