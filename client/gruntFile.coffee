@@ -6,9 +6,11 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-jade"
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-html2js"
-  
+  grunt.loadNpmTasks "grunt-recess"
+
   grunt.registerTask "default", ['build']
-  grunt.registerTask "build", ["clean", "jade", "html2js", "coffee", "copy", "concat", "clean:tmp"]#"jshint", "build"]
+  grunt.registerTask "build", ["clean", "jade", "html2js", "coffee", "copy:assets", "copy:vendordev", "concat:js", "concat:css", "recess:build", "clean:tmp"]
+  grunt.registerTask "release", ["clean", "jade", "html2js", "coffee", "copy:assets", "copy:vendormin", "concat:jsmin", "concat:jsmin", "concat:cssmin", "recess:min", "clean:tmp"]
   grunt.registerTask "build-watch", ['watch:build']
 
   grunt.registerTask "timestamp", ->
@@ -34,7 +36,7 @@ module.exports = (grunt) ->
           expand: true
           cwd: "src/assets/"
         ]
-      vendor:
+      vendordev:
         files: [
           dest: "<%= distdir %>/jquery.js"
           src: "vendor/jquery/jquery.js"
@@ -47,12 +49,31 @@ module.exports = (grunt) ->
           src: "**"
           cwd: "vendor/bootstrap/dist/fonts"
         ]
+      vendormin:
+        files: [
+          dest: "<%= distdir %>/jquery.js"
+          src: "vendor/jquery/jquery.min.js"
+        ,
+          dest: "<%= distdir %>/jquery.min.map"
+          src: "vendor/jquery/jquery.min.map"
+        ,
+          dest: "<%= distdir %>/angular.min.js.map"
+          src: "vendor/angular/angular.min.js.map"
+        ,
+          dest: "<%= distdir %>/bootstrap.js"
+          src: "vendor/bootstrap/dist/js/bootstrap.min.js"
+        ,
+          expand: true
+          dest: "<%= distdir %>/fonts"
+          src: "**"
+          cwd: "vendor/bootstrap/dist/fonts"
+        ]
     coffee:
       compileJoined:
         options:
           join: true
         files:
-          '<%= distdir %>/app.js': 'src/**/*.coffee'
+          '<%= distdirtmp %>/app.js': 'src/**/*.coffee'
     jade:
       compile:
         options:
@@ -71,15 +92,6 @@ module.exports = (grunt) ->
           expand: true
           ext: ".html"
         ]
-#    karma:
-#      unit:
-#        options: karmaConfig("test/config/unit.js")
-#
-#      watch:
-#        options: karmaConfig("test/config/unit.js",
-#          singleRun: false
-#          autoWatch: true
-#        )
 
     html2js:
       app:
@@ -99,81 +111,38 @@ module.exports = (grunt) ->
         module: "templates.common"
 
     concat:
-      angular:
-        src: ["vendor/angular/angular.js", "vendor/angular-route/angular-route.js"]
+      js:
+        src: ["vendor/angular/angular.js", "vendor/angular-route/angular-route.js", "<%=distdirtmp%>/app.js", "<%= distdirtmp %>/templates/*.js"]
         dest: "<%= distdir %>/angular.js"
 
-      bootstrap:
+      jsmin:
+        src: ["vendor/angular/angular.min.js", "vendor/angular-route/angular-route.min.js", "<%=distdirtmp%>/app.js", "<%= distdirtmp %>/templates/*.js"]
+        dest: "<%= distdir %>/angular.js"
+
+      css:
         src: ["vendor/bootstrap/dist/css/bootstrap.css", "vendor/bootstrap/dist/css/bootstrap-theme.css"]
         dest: "<%= distdir %>/bootstrap.css"
 
-      templates:
-        src:["<%=distdir%>/app.js", "<%= distdirtmp %>/templates/*.js"]
-        dest: "<%= distdir %>/app.js"
+      cssmin:
+        src: ["vendor/bootstrap/dist/css/bootstrap.min.css", "vendor/bootstrap/dist/css/bootstrap-theme.min.css"]
+        dest: "<%= distdir %>/bootstrap.css"
 
     watch:
       build:
         files: ['src/**/*']
         tasks: ['build', 'timestamp']
 
-#    uglify:
-#      dist:
-#        options:
-#          banner: "<%= banner %>"
-#
-#        src: ["<%= src.js %>", "<%= src.jsTpl %>"]
-#        dest: "<%= distdir %>/<%= pkg.name %>.js"
-#
-#      angular:
-#        src: ["<%= concat.angular.src %>"]
-#        dest: "<%= distdir %>/angular.js"
-#
-#      mongo:
-#        src: ["vendor/mongolab/*.js"]
-#        dest: "<%= distdir %>/mongolab.js"
-#
-#      bootstrap:
-#        src: ["vendor/angular-ui/bootstrap/*.js"]
-#        dest: "<%= distdir %>/bootstrap.js"
-#
-#      jquery:
-#        src: ["vendor/jquery/*.js"]
-#        dest: "<%= distdir %>/jquery.js"
-#
-#    recess:
-#      build:
-#        files:
-#          "<%= distdir %>/<%= pkg.name %>.css": ["<%= src.less %>"]
-#
-#        options:
-#          compile: true
-#
-#      min:
-#        files:
-#          "<%= distdir %>/<%= pkg.name %>.css": ["<%= src.less %>"]
-#
-#        options:
-#          compress: true
-#
-#    watch:
-#      all:
-#        files: ["<%= src.js %>", "<%= src.specs %>", "<%= src.lessWatch %>", "<%= src.tpl.app %>", "<%= src.tpl.common %>", "<%= src.html %>"]
-#        tasks: ["default", "timestamp"]
-#
-#      build:
-#        files: ["<%= src.js %>", "<%= src.specs %>", "<%= src.lessWatch %>", "<%= src.tpl.app %>", "<%= src.tpl.common %>", "<%= src.html %>"]
-#        tasks: ["build", "timestamp"]
-#
-#    jshint:
-#      files: ["gruntFile.js", "<%= src.js %>", "<%= src.jsTpl %>", "<%= src.specs %>", "<%= src.scenarios %>"]
-#      options:
-#        curly: true
-#        eqeqeq: true
-#        immed: true
-#        latedef: true
-#        newcap: true
-#        noarg: true
-#        sub: true
-#        boss: true
-#        eqnull: true
-#        globals: {}
+    recess:
+      build:
+        files:
+          "<%= distdir %>/styles.css": ["src/less/*.less"]
+
+        options:
+          compile: true
+
+      min:
+        files:
+          "<%= distdir %>/styles.css": ["src/less/*.less"]
+
+        options:
+          compress: true

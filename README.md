@@ -9,6 +9,8 @@ leaving the higher granularity - less urls, increases the performance of load Ap
 
 * **Coffee Script** - JS client and server code are written in Coffee Script and compile to JS.
 
+* **Less** - The dynamic stylesheet language.
+
 * **AngularJS and Angular-route** - Single Page Application framework.
 
 * **Twitter Bootstrap 3** - Easy Responsive Layout
@@ -69,7 +71,41 @@ cd dist
 node server.js
 ```
 
+### Production
 
+#### Compile the client
+```
+cd seed-basic/client
+
+# install grunt tasks
+npm install
+
+# install vendor libs
+bower install
+
+# release -> this will generate dist dir with compiled, compress and minify code
+grunt release
+```
+
+#### Compile the server
+```
+cd seed-basic/server
+
+# install grunt tasks to compile the source
+npm install
+
+# install server dependencies
+cd src
+npm install
+cd..
+
+# build generate dist dir
+grunt
+
+# Run server (I recommend using the [pm2](https://github.com/Unitech/pm2) monitor for this
+cd dist
+node server.js # bad usage in prod, will be stopped with ssh session
+```
 
 ## Directory structure
 ```
@@ -80,12 +116,14 @@ node server.js
 │   ├── src
 │   │   ├── app
 │   │   │   ├── app.coffee         --> route and app definition
-│   │   │   └── views              --> All template files generate a single JS file
+│   │   │   └── views              --> All template files generate a single JS file, dist/angular.js
 │   │   │       ├── view1.tpl.jade --> Angular Templates write in Jade
 │   │   │       └── view2.tpl.jade
 │   │   ├── assets                 --> image and static resources
 │   │   │   └── favicon.ico
-│   │   ├── common                 --> AngularJS Stuff will be compiled to a single JS file
+│   │   ├── less                   --> less styles, all files in this dir will be compiled to dist/styles.css
+│   │   │   └── styles.css
+│   │   ├── common                 --> AngularJS Stuff will be compiled to a single JS file, dist/angular.css
 │   │   │   ├── directives
 │   │   │   ├── resources
 │   │   │   ├── security
@@ -107,10 +145,12 @@ node server.js
 ## Contact
 ### Links 
 [AngularJS](http://angularjs.org/), [Twitter Bootstrap](http://getbootstrap.com/),
-[Bower](https://github.com/bower/bower), [Jade](http://jade-lang.com/), [Coffee Script](http://coffeescript.org/),
+[Bower](https://github.com/bower/bower), [Grunt](http://gruntjs.com/), [Jade](http://jade-lang.com/), [Coffee Script](http://coffeescript.org/),
+[Less](http://lesscss.org/),
 [NodeJS](http://nodejs.org/), [NPM](https://github.com/bower/bower), [ExpressJS](http://expressjs.com)
 
 Inspired by [angular-seed](https://github.com/angular/angular-seed)
 
 ## License
 [MIT License](https://github.com/krauchenco/seed-basic/blob/master/LICENSE)
+
