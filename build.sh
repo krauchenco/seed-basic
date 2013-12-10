@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+cd client
+npm install
+bower install
+grunt build
+cd ..
+cd server
+npm install
+cd src
+npm install
