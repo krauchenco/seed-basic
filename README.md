@@ -31,46 +31,15 @@ git clone https://github.com/krauchenco/seed-basic.git
 
 ### Development
 
-#### Compile the client
 ```
-cd seed-basic/client
+cd seed-basic
 
-# install grunt tasks
-npm install
+#install all packages, client and server
+./build
 
-# install vendor libs
-bower install
-
-# build -> this will generate dist dir
-grunt
-
-# to 'watch' the files and generate dist with the changes in src
-grunt build-watch
+# run build-watch client and server and run nodemon with server
+./execDevMac.as
 ```
-
-#### Compile the server
-```
-cd seed-basic/server
-
-# install grunt tasks to compile the source
-npm install
-
-# install server dependencies
-cd src
-npm install
-cd..
-
-# build generate dist dir
-grunt
-
-# watch source modification and auto-compile
-grunt build-watch
-
-# Run server
-cd dist
-node server.js
-```
-
 ### Production
 
 #### Compile the client
@@ -147,7 +116,8 @@ node server.js # bad usage in prod, will be stopped with ssh session
 [AngularJS](http://angularjs.org/), [Twitter Bootstrap](http://getbootstrap.com/),
 [Bower](https://github.com/bower/bower), [Grunt](http://gruntjs.com/), [Jade](http://jade-lang.com/), [Coffee Script](http://coffeescript.org/),
 [Less](http://lesscss.org/),
-[NodeJS](http://nodejs.org/), [NPM](https://github.com/bower/bower), [ExpressJS](http://expressjs.com)
+[NodeJS](http://nodejs.org/), [NPM](https://github.com/bower/bower), [ExpressJS](http://expressjs.com),
+[nodemon](https://github.com/remy/nodemon)
 
 Inspired by [angular-seed](https://github.com/angular/angular-seed)
 
