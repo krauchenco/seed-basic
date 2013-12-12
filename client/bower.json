@@ -18,5 +18,19 @@
     "bootstrap": "~3.0.2",
     "angular": "~1.2.3",
     "angular-route": "~1.2.3"
+  },
+  "exportsOverride":{
+    "bootstrap": {
+      "css": "dist/css/*.min.css",
+      "js": "dist/js/*.min.js",
+      "fonts": "dist/fonts/*"
+    },
+    "jquery": {
+      "js": "**/*.min.*"
+    },
+    "*": {
+      "js": ["**/*.min.js*"],
+      "css": "**/*.min.css"
+    }
   }
 }

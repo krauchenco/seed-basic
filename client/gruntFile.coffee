@@ -7,10 +7,11 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-html2js"
   grunt.loadNpmTasks "grunt-recess"
+  grunt.loadNpmTasks "grunt-bower-task"
 
   grunt.registerTask "default", ['build']
-  grunt.registerTask "build", ["clean", "jade", "html2js", "coffee", "copy:assets", "copy:vendordev", "concat:js", "concat:css", "recess:build", "clean:tmp"]
-  grunt.registerTask "release", ["clean", "jade", "html2js", "coffee", "copy:assets", "copy:vendormin", "concat:jsmin", "concat:jsmin", "concat:cssmin", "recess:min", "clean:tmp"]
+  grunt.registerTask "build", ["clean", "jade", "html2js", "coffee", "copy", "concat", "recess:build", "bower", "clean:tmp"]
+  grunt.registerTask "release", ["clean", "jade", "html2js", "coffee", "copy", "concat", "recess:min", "bower", "clean:tmp"]
   grunt.registerTask "build-watch", ['watch:build']
 
   grunt.registerTask "timestamp", ->
@@ -28,6 +29,17 @@ module.exports = (grunt) ->
     clean:
       dist: ["<%= distdir %>"]
       tmp: ["<%= distdirtmp %>"]
+
+    bower:
+      install:
+        options:
+          targetDir: '<%= distdir %>'
+          layout: 'byComponent'
+          install: true
+          verbose: true
+          cleanTargetDir: false
+          cleanBowerDir: false
+          bowerOptions: {}
     copy:
       assets:
         files: [
@@ -35,38 +47,6 @@ module.exports = (grunt) ->
           src: "**"
           expand: true
           cwd: "src/assets/"
-        ]
-      vendordev:
-        files: [
-          dest: "<%= distdir %>/jquery.js"
-          src: "vendor/jquery/jquery.js"
-        ,
-          dest: "<%= distdir %>/bootstrap.js"
-          src: "vendor/bootstrap/dist/js/bootstrap.js"
-        ,
-          expand: true
-          dest: "<%= distdir %>/fonts"
-          src: "**"
-          cwd: "vendor/bootstrap/dist/fonts"
-        ]
-      vendormin:
-        files: [
-          dest: "<%= distdir %>/jquery.js"
-          src: "vendor/jquery/jquery.min.js"
-        ,
-          dest: "<%= distdir %>/jquery.min.map"
-          src: "vendor/jquery/jquery.min.map"
-        ,
-          dest: "<%= distdir %>/angular.min.js.map"
-          src: "vendor/angular/angular.min.js.map"
-        ,
-          dest: "<%= distdir %>/bootstrap.js"
-          src: "vendor/bootstrap/dist/js/bootstrap.min.js"
-        ,
-          expand: true
-          dest: "<%= distdir %>/fonts"
-          src: "**"
-          cwd: "vendor/bootstrap/dist/fonts"
         ]
     coffee:
       compileJoined:
@@ -112,20 +92,8 @@ module.exports = (grunt) ->
 
     concat:
       js:
-        src: ["vendor/angular/angular.js", "vendor/angular-route/angular-route.js", "<%=distdirtmp%>/app.js", "<%= distdirtmp %>/templates/*.js"]
-        dest: "<%= distdir %>/angular.js"
-
-      jsmin:
-        src: ["vendor/angular/angular.min.js", "vendor/angular-route/angular-route.min.js", "<%=distdirtmp%>/app.js", "<%= distdirtmp %>/templates/*.js"]
-        dest: "<%= distdir %>/angular.js"
-
-      css:
-        src: ["vendor/bootstrap/dist/css/bootstrap.css", "vendor/bootstrap/dist/css/bootstrap-theme.css"]
-        dest: "<%= distdir %>/bootstrap.css"
-
-      cssmin:
-        src: ["vendor/bootstrap/dist/css/bootstrap.min.css", "vendor/bootstrap/dist/css/bootstrap-theme.min.css"]
-        dest: "<%= distdir %>/bootstrap.css"
+        src: ["<%=distdirtmp%>/app.js", "<%= distdirtmp %>/templates/*.js"]
+        dest: "<%= distdir %>/app.js"
 
     watch:
       build:
